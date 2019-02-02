@@ -37,6 +37,7 @@ export const receiveHomePagePromo = (promo: PromoDto) => ({
   }
 });
 
+// TODO: This should be renamed to fetchHomePageImage
 export const requestHomePageImageAsync = (assetId: string) => async (
   dispatch: Dispatch<any>
 ) => {

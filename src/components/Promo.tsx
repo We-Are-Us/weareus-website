@@ -6,12 +6,10 @@ export interface PromoDto {
   title: string;
   secondaryTitle?: string;
   text: string;
-  backgroundImageId: string;
-}
-
-interface PromoProps extends PromoDto {
   backgroundImage?: string;
 }
+
+interface PromoProps extends PromoDto {}
 
 const containerStyle = {
   height: '240px'
@@ -28,16 +26,20 @@ const Promo: React.SFC<PromoProps> = ({
   title,
   secondaryTitle,
   text,
-  backgroundImageId,
   backgroundImage
 }) => (
-  <div className="container container-fluid mx-0" style={containerStyle}>
+  <div
+    className="container container-fluid mx-0 bg-dark text-white"
+    style={containerStyle}
+  >
     <BlockImage
       backgroundSize="cover"
       src={backgroundImage}
       style={imageStyle}
     />
     <h3 className="h3">{title}</h3>
+    {secondaryTitle && <div>{secondaryTitle}</div>}
+    {text}
   </div>
 );
 

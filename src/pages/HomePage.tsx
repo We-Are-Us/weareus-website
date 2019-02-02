@@ -1,67 +1,105 @@
 import React from 'react';
 // FIXME: write types
 import BlockImage from 'react-block-image';
-import { getHomePageText } from '../redux/selectors';
+import { getHomePageContentState } from '../redux/selectors';
 import { connect } from 'react-redux';
 import { AppState } from '../redux/store';
-import { Dispatch } from 'redux';
-import {
-  requestHomePageImageAsync,
-  requestHomePagePromoAsync
-} from '../redux/actions';
+import Navigation from '../components/Navigation';
 import Promo, { PromoDto } from '../components/Promo';
+import ResponsiveImageSet, { Breakpoint } from '../content/ResponsiveImageSet';
 
 export interface HomePageDto {
   heroHeader: string;
   heroText: string;
-  heroImageId: string;
+  heroImages: ResponsiveImageSet;
   leadText: string;
-  promoId?: string;
+  promo?: PromoDto;
 }
 
-interface HomePageProps extends HomePageDto {
-  heroImage: string;
-  promo?: PromoDto;
-  dispatch: Dispatch;
-}
+interface HomePageProps extends HomePageDto {}
 
 const containerStyle = {
+  backgroundColor: 'transparent',
   height: '80vh'
 };
 
 const imageStyle = {
   position: 'absolute',
+  margin: 0,
+  padding: 0,
   height: '80vh',
-  width: '100%',
+  width: '100vw',
   zIndex: -1
 };
+
+const navigationItems = [
+  {
+    text: 'About',
+    href: '#',
+    isButton: false
+  },
+  {
+    text: 'Practitioners',
+    href: '#',
+    isButton: false
+  },
+  {
+    text: 'Login',
+    href: '#',
+    isButton: false
+  },
+  {
+    text: 'Register',
+    href: '#',
+    isButton: true
+  }
+];
 
 // TODO: probably want to extract a cover image component
 const HomePage: React.SFC<HomePageProps> = ({
   heroHeader,
   heroText,
-  heroImage,
-  heroImageId,
+  heroImages,
   leadText,
-  promoId,
-  promo,
-  dispatch
+  promo
 }) => {
-  // FIXME: dodgy AF
-  if (heroImageId !== '' && heroImage == null) {
-    dispatch(requestHomePageImageAsync(heroImageId));
-  }
-
-  if (promoId == null && promoId !== '' && promo == null) {
-    dispatch(requestHomePagePromoAsync(promoId));
-  }
-
   return (
     <>
-      <div className="container container-fluid p-0 m-0" style={containerStyle}>
-        <BlockImage backgroundSize="cover" src={heroImage} style={imageStyle} />
-        <div className="py-5">{/* nav */}</div>
-        <div className="container text-white pt-1 pt-lg-5 mx-3 mx-lg-5">
+      <div className="jumbotron jumbotron-fluid pt-0" style={containerStyle}>
+        {heroImages && (
+          <>
+            <div className="d-md-none">
+              <BlockImage
+                style={imageStyle}
+                backgroundSize="cover"
+                src={heroImages.getImageForBreakpoint(Breakpoint.sm)}
+              />
+            </div>
+            <div className="d-none d-md-block d-lg-none">
+              <BlockImage
+                style={imageStyle}
+                backgroundSize="cover"
+                src={heroImages.getImageForBreakpoint(Breakpoint.md)}
+              />
+            </div>
+            <div className="d-none d-lg-block d-xl-none">
+              <BlockImage
+                style={imageStyle}
+                backgroundSize="cover"
+                src={heroImages.getImageForBreakpoint(Breakpoint.lg)}
+              />
+            </div>
+            <div className="d-none d-xl-block">
+              <BlockImage
+                style={imageStyle}
+                backgroundSize="cover"
+                src={heroImages.getImageForBreakpoint(Breakpoint.xl)}
+              />
+            </div>
+          </>
+        )}
+        <Navigation navigationItems={navigationItems} />
+        <div className="container text-white pt-3 pt-lg-5 mx-auto">
           <div className="row">
             <div className="col-11 col-sm-8 col-md-6">
               <h1 className="display-5">{heroHeader}</h1>
@@ -70,20 +108,18 @@ const HomePage: React.SFC<HomePageProps> = ({
           </div>
         </div>
       </div>
-      <div className="container mt-5 text-primary">
+      <div className="container mt-5 mx-auto text-primary">
         <p className="lead">{leadText}</p>
       </div>
-      {promo && <Promo {...promo} />}
+      {/* promo && <Promo {...promo} /> */}
     </>
   );
 };
 
 const mapStateToProps = (state: AppState) => {
-  const content = getHomePageText(state);
-  const heroImage = state.homePage ? state.homePage.heroImage : '';
-  const promo = state.homePage ? state.homePage.promo || {} : {};
+  const content = getHomePageContentState(state);
 
-  return { ...content, heroImage, promo };
+  return { ...content };
 };
 
 export default connect(

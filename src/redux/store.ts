@@ -6,13 +6,11 @@ import { makeMiddleware } from './middleware/contentful';
 // import { makeSelectors } from 'contentful-redux';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+// TODO: separate data and UI
+
 export interface AppState {
   contentful: any;
   nextSyncToken: string;
-  homePage: {
-    heroImage: string;
-    promo: any;
-  };
 }
 
 // contentful-redux's middleware does not work with the latest Contentful API
