@@ -1,14 +1,19 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 // FIXME: write types
 import BlockImage from 'react-block-image';
 import { getHomePageContentState } from '../redux/selectors';
-import { connect } from 'react-redux';
 import { AppState } from '../redux/store';
 import Navigation from '../components/Navigation';
 import Promo, { PromoDto } from '../components/Promo';
 import ResponsiveImageSet, { Breakpoint } from '../content/ResponsiveImageSet';
+import Newsletter from '../components/Newsletter';
+import Footer from '../components/Footer';
+import Auth from '../services/Auth';
 
 export interface HomePageDto {
+  auth: Auth;
   heroHeader: string;
   heroText: string;
   heroImages: ResponsiveImageSet;
@@ -31,38 +36,17 @@ const imageStyle = {
   width: '100vw',
   zIndex: -1
 };
-
-const navigationItems = [
-  {
-    text: 'About',
-    href: '#',
-    isButton: false
-  },
-  {
-    text: 'Practitioners',
-    href: '#',
-    isButton: false
-  },
-  {
-    text: 'Login',
-    href: '#',
-    isButton: false
-  },
-  {
-    text: 'Register',
-    href: '#',
-    isButton: true
-  }
-];
-
 // TODO: probably want to extract a cover image component
 const HomePage: React.SFC<HomePageProps> = ({
+  auth,
   heroHeader,
   heroText,
   heroImages,
   leadText,
   promo
 }) => {
+  const { isAuthenticated = () => false } = auth;
+
   return (
     <>
       <div className="jumbotron jumbotron-fluid pt-0" style={containerStyle}>
@@ -98,7 +82,7 @@ const HomePage: React.SFC<HomePageProps> = ({
             </div>
           </>
         )}
-        <Navigation variant={'dark'} navigationItems={navigationItems} />
+        <Navigation isAuthenticated={isAuthenticated()} variant={'dark'} />
         <div className="container text-white pt-3 pt-lg-5 mx-auto">
           <div className="row">
             <div className="col-11 col-sm-8 col-md-6">
@@ -112,6 +96,8 @@ const HomePage: React.SFC<HomePageProps> = ({
         <p className="lead">{leadText}</p>
       </div>
       {/* promo && <Promo {...promo} /> */}
+      <Newsletter />
+      <Footer />
     </>
   );
 };
@@ -122,7 +108,9 @@ const mapStateToProps = (state: AppState) => {
   return { ...content };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(HomePage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    null
+  )(HomePage)
+);

@@ -66,8 +66,12 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js']
   },
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'public'),
     filename: '[name].[hash].js'
+  },
+  devServer: {
+    historyApiFallback: true
   },
   optimization: {
     splitChunks: {

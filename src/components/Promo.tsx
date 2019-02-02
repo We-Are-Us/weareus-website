@@ -29,7 +29,7 @@ const Promo: React.SFC<PromoProps> = ({
   backgroundImage
 }) => (
   <div
-    className="container container-fluid mx-0 bg-dark text-white"
+    className="container-fluid mx-0 bg-dark text-white"
     style={containerStyle}
   >
     <BlockImage
