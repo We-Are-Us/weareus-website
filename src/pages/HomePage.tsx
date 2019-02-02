@@ -98,7 +98,7 @@ const HomePage: React.SFC<HomePageProps> = ({
             </div>
           </>
         )}
-        <Navigation navigationItems={navigationItems} />
+        <Navigation variant={'dark'} navigationItems={navigationItems} />
         <div className="container text-white pt-3 pt-lg-5 mx-auto">
           <div className="row">
             <div className="col-11 col-sm-8 col-md-6">

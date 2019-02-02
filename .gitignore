@@ -80,6 +80,8 @@ typings/
 .dynamodb/
 
 
+.DS_Store
+
 # Output
 lib
 public
