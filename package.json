@@ -1,5 +1,6 @@
 {
   "name": "weareus-website",
+  "repository": "https://github.com/We-Are-Us/weareus-website",
   "version": "1.0.0",
   "description": "Website for We Are Us",
   "engines": {
@@ -23,6 +24,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@contentful/rich-text-plain-text-renderer": "^13.0.0",
     "@types/auth0-js": "^8.11.11",
     "@types/classnames": "^2.2.7",
     "@types/node": "^10.12.18",
@@ -39,6 +41,7 @@
     "contentful": "^7.1.0",
     "contentful-redux": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
+    "creature-features": "^3.1.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
     "dotenv-webpack": "^1.7.0",

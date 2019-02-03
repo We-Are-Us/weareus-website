@@ -11,13 +11,15 @@ import ResponsiveImageSet, { Breakpoint } from '../content/ResponsiveImageSet';
 import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import Auth from '../services/Auth';
+import Card, { CardDto } from '../components/Card';
 
 export interface HomePageDto {
-  auth: Auth;
+  auth?: Auth;
   heroHeader: string;
   heroText: string;
   heroImages: ResponsiveImageSet;
   leadText: string;
+  cards: Array<CardDto>;
   promo?: PromoDto;
 }
 
@@ -43,9 +45,10 @@ const HomePage: React.SFC<HomePageProps> = ({
   heroText,
   heroImages,
   leadText,
+  cards,
   promo
 }) => {
-  const { isAuthenticated = () => false } = auth;
+  const isAuthenticated = auth ? auth.isAuthenticated : () => false;
 
   return (
     <>
@@ -95,6 +98,19 @@ const HomePage: React.SFC<HomePageProps> = ({
       <div className="container mt-5 mx-auto text-primary">
         <p className="lead">{leadText}</p>
       </div>
+      {cards && cards.length > 0 && (
+        <div className="container my-5">
+          <hr />
+          <div className="row mt-4">
+            {cards.map(props => (
+              /* TODO: classnames for cols */
+              <div key={props.title} className="col-12 col-md-6">
+                <Card {...props} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {/* promo && <Promo {...promo} /> */}
       <Newsletter />
       <Footer />

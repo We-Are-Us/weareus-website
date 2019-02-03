@@ -1,5 +1,7 @@
 /* eslint-env node */
 const path = require('path');
+const webpack = require('webpack');
+const features = require('creature-features')();
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -7,6 +9,10 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const featureFlags = new webpack.DefinePlugin({
+  FEATURES: features
+});
 
 const mode =
   process.env.NODE_ENV === 'production' ? 'production' : 'development';
@@ -29,7 +35,8 @@ const plugins = [
       title: 'We Are Us'
     }
   }),
-  new CopyWebpackPlugin([{ from: './assets/*', to: './public/' }])
+  new CopyWebpackPlugin([{ from: './assets/*', to: './public/' }]),
+  featureFlags
 ];
 
 if (mode === 'production') {

@@ -12,3 +12,26 @@ $primary: #79158f;
 .logo {
   zoom: 60%;
 }
+
+#mc_embed_signup {
+  .button {
+    @include button-variant($primary, $primary);
+    clear: both;
+    border: 0 none;
+    border-radius: $btn-border-radius;
+    transition: all 0.23s ease-in-out 0s;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: normal;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 5px 10px 0;
+    padding: 0 22px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+    width: auto;
+  }
+}

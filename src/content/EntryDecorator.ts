@@ -1,4 +1,5 @@
 import { Entry, Asset } from 'contentful';
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 
 class EntryDecorator {
   private entry: Entry<any>;
@@ -15,6 +16,16 @@ class EntryDecorator {
     }
 
     return field['en-NZ'] || field || '';
+  }
+
+  getRichTextField(fieldName: string) {
+    const field = this.entry.fields[fieldName];
+
+    if (field == null) {
+      return '';
+    }
+
+    return documentToPlainTextString(field['en-NZ'] || field) || '';
   }
 
   getAssetId(fieldName: string) {
@@ -41,6 +52,18 @@ class EntryDecorator {
       : reference.sys.id;
 
     return referenceId;
+  }
+
+  getReferenceIds(fieldName: string) {
+    const reference = this.entry.fields[fieldName];
+
+    if (reference == null) {
+      return [];
+    }
+
+    const nodes = reference['en-NZ'] || reference;
+
+    return nodes.map((node: any) => node.sys.id);
   }
 }
 

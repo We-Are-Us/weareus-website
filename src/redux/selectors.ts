@@ -5,6 +5,7 @@ import EntryDecorator from '../content/EntryDecorator';
 import { AppState } from './store';
 import { PromoDto } from '../components/Promo';
 import ResponsiveImageSet, { Breakpoint } from '../content/ResponsiveImageSet';
+import { CardDto } from '../components/Card';
 
 const getAssetsContent = (state: AppState): Array<Asset> => {
   const { assets } = state.contentful;
@@ -23,6 +24,31 @@ const getAssetUrl = (state: AppState, id: string): string => {
   }
 
   return asset.fields.file.url || asset.fields.file['en-NZ'].url;
+};
+
+const getCardContent = (state: AppState, id: string): CardDto | undefined => {
+  const { entries } = state.contentful;
+
+  if (entries == null || entries.length === 0) {
+    return undefined;
+  }
+
+  const cardEntry = entries.filter(
+    (entry: Entry<any>) =>
+      entry.sys.id === id && entry.sys.contentType.sys.id === 'card'
+  )[0];
+
+  if (cardEntry == null) {
+    return undefined;
+  }
+
+  const decorator = new EntryDecorator(cardEntry);
+
+  return {
+    title: decorator.getTextField('title'),
+    text: decorator.getRichTextField('text'),
+    imageUrl: getAssetUrl(state, decorator.getAssetId('image'))
+  };
 };
 
 const getResponsiveImageSetContent = (
@@ -113,11 +139,18 @@ const getHomePageContent = (state: AppState) => {
   const heroImagesId = decorator.getAssetId('heroImages');
   const heroImages = getResponsiveImageSetContent(state, heroImagesId);
 
+  const cardIds = decorator.getReferenceIds('cards');
+
+  const cards: Array<CardDto> = cardIds.map((id: string) =>
+    getCardContent(state, id)
+  );
+
   const result: HomePageDto = {
     heroHeader: decorator.getTextField('heroHeader'),
     heroText: decorator.getTextField('heroText'),
     heroImages,
     leadText: decorator.getTextField('leadText'),
+    cards,
     promo: getPromosContent(state)
   };
 

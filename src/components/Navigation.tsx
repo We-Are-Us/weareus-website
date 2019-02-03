@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import getNavigationItems from '../services/getNavigationItems';
+import { getHeaderItems } from '../services/navigation';
 import { LogoPurple, LogoWhite } from './Logo';
 
 interface NavigationProps {
@@ -13,7 +13,7 @@ const Navigation: React.SFC<NavigationProps> = ({
   isAuthenticated,
   variant
 }) => {
-  const navigationItems = getNavigationItems(isAuthenticated);
+  const navigationItems = getHeaderItems(isAuthenticated);
 
   return (
     <div className="container px-0">
