@@ -9,8 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "prebuild": "tsc",
-    "_build": "babel ./src --out-dir lib --extensions '.ts,.tsx'",
+    "_prebuild": "tsc",
     "build": "NODE_ENV=production webpack",
     "lint": "eslint --ext .ts,.tsx,.js -f stylish .",
     "test": "jest",

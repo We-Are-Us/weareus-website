@@ -37,7 +37,11 @@ const plugins = [
       title: 'We Are Us'
     }
   }),
-  new CopyWebpackPlugin([{ from: './assets/*', to: './public/' }]),
+  // dev /public; prod /public/assets
+  new CopyWebpackPlugin(
+    [{ from: './assets/*', to: './assets/', flatten: true }],
+    { debug: true }
+  ),
   featureFlags
 ];
 
