@@ -10,6 +10,7 @@ import Auth from './services/Auth';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import RegisterPage from './pages/RegisterPage';
 import Callback from './components/Callback';
 
 const auth = new Auth();
@@ -33,6 +34,10 @@ const App: React.SFC<{}> = () => (
       <Route
         path="/about"
         render={props => <AboutPage auth={auth} {...props} />}
+      />
+      <Route
+        path="/register"
+        render={props => <RegisterPage auth={auth} {...props} />}
       />
       <Route
         path="/login"

@@ -65,6 +65,18 @@ class EntryDecorator {
 
     return nodes.map((node: any) => node.sys.id);
   }
+
+  getArray(fieldName: string) {
+    const reference = this.entry.fields[fieldName];
+
+    if (reference == null) {
+      return [];
+    }
+
+    const nodes = reference['en-NZ'] || reference;
+
+    return nodes;
+  }
 }
 
 export default EntryDecorator;

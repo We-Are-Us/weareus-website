@@ -24,6 +24,18 @@ const Footer: React.SFC<{}> = () => {
               </li>
             ))}
           </ul>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                href="https://www.instagram.com/we_are_us_nz/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="/assets/icon_instagram.svg" />
+              </a>
+            </li>
+          </ul>
         </div>
       </nav>
     </div>
