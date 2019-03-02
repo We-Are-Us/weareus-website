@@ -16,7 +16,7 @@ export const getHeaderItems = (
 
   items.push({
     text: 'Practitioners',
-    href: '#',
+    href: '/practitioners',
     isButton: false
   });
 

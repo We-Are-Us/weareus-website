@@ -13,6 +13,7 @@ import AboutPage from './pages/AboutPage';
 import RegisterPage from './pages/RegisterPage';
 import Callback from './components/Callback';
 import PractitionerPage from './pages/PractitionerPage';
+import PractitionersPage from './pages/PractitionersPage';
 
 const auth = new Auth();
 
@@ -41,7 +42,13 @@ const App: React.SFC<{}> = () => (
         render={props => <RegisterPage auth={auth} {...props} />}
       />
       <Route
-        path="/practitioner/:id"
+        path="/practitioners"
+        exact={true}
+        render={props => <PractitionersPage auth={auth} />}
+      />
+
+      <Route
+        path="/practitioners/:id"
         render={props => (
           <PractitionerPage auth={auth} id={props.match.params.id} {...props} />
         )}
