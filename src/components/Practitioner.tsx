@@ -38,8 +38,14 @@ const Practitioner: React.SFC<PractitionerProps> = props => (
       />
     </div>
     <div className="container mt-4">
-      <img src={props.logoImageUrl} className="float-right" />
-      <h2 className="h2 text-primary">{props.name}</h2>
+      <div className="row">
+        <div className="col-12 col-md-8">
+          <h2 className="h2 text-primary">{props.name}</h2>
+        </div>
+        <div className="col-12 col-md-4">
+          <img src={props.logoImageUrl} />
+        </div>
+      </div>
       <h3 className="h3">About</h3>
       {props.about.map(about => (
         <p>{about}</p>
