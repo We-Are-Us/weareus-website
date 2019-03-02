@@ -13,19 +13,6 @@ export interface PractitionerPageProps {
   practitionerFetch: Mapping<PractitionerPageProps, Document>;
 }
 
-/*
-const AboutPage: React.SFC<AboutPageProps> = ({ auth }) => (
-  <>
-    <Navigation isAuthenticated={auth.isAuthenticated()} variant={'light'} />
-    <div className="container">
-      <p>About</p>
-    </div>
-    <Footer />
-  </>
-);
-
-*/
-
 class PractitionerPage extends React.Component<PractitionerPageProps, {}> {
   constructor(props: Readonly<PractitionerPageProps>) {
     super(props);

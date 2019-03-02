@@ -10,7 +10,20 @@
 import Prismic from 'prismic-javascript';
 import { Document } from 'prismic-javascript/d.ts/documents';
 
-const apiEndpoint = 'https://weareus.prismic.io/api/v2';
+const API_ENDPOINT = 'https://weareus.prismic.io/api/v2';
+
+const DOCUMENT_TYPE = 'practitioner';
 
 export const byUid = (id: string): Promise<Document> =>
-  Prismic.api(apiEndpoint).then(api => api.getByUID('practitioner', id));
+  Prismic.api(API_ENDPOINT).then(api => api.getByUID(DOCUMENT_TYPE, id));
+
+interface SearchCriteria {
+  name?: string;
+  therapyType?: string;
+  region?: string;
+}
+
+export const search = (criteria: SearchCriteria) =>
+  Prismic.api(API_ENDPOINT).then(api =>
+    api.query(Prismic.Predicates.at('document.type', DOCUMENT_TYPE), {})
+  );
