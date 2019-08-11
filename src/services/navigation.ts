@@ -14,11 +14,13 @@ export const getHeaderItems = (
     });
   }
 
+  /*
   items.push({
     text: 'Practitioners',
     href: '/practitioners',
     isButton: false
   });
+  */
 
   if (features.variation('Login')) {
     items.push({
